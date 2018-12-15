@@ -1,0 +1,37 @@
+{% extends 'base.html'%}
+{% load staticfiles %}
+{% block title %}
+    {{ interFace.model_type }}类型
+{% endblock %}
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'detail.css'%}">
+{% endblock %}
+{% block content %}
+    <body>
+        <div class="interFace_zd">
+            <dl>
+              <dt><p class="bg-primary">接口名称</p></dt>
+              <dd><p class="bg-success">{{ interFace.title }}</p></dd>
+              <dt><p class="bg-info">接口地址</p></dt>
+              <dd><p class="bg-info">{{ interFace.request_url }}</p></dd>
+            </dl>
+            <form method="post" action=" ">
+                {%csrf_token%}
+                <div class="form-group">
+                    <input type="text" class="form-control" id="exampleInputEmail1" name="interFaceParame" placeholder="输入接口参数">
+                    <button type="submit" class="btn btn-default">提交请求</button>
+                </div>
+            </form>
+        </div>
+        <h3>请求结果</h3>
+        <div class="interFace_re">
+            <p class="lead"><pre id="out_pre">{{ result.result }}</pre></p>
+
+            <script type="text/javascript">
+            　 var text = document.getElementById('out_pre').innerText; //获取json格式内容
+               var result = JSON.stringify(JSON.parse(text), null, 2);//将字符串转换成json对象
+               document.getElementById('out_pre').innerText= result ;
+            </script>
+        </div>
+    </body>
+{% endblock %}
