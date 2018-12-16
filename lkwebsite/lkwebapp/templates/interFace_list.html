@@ -6,47 +6,84 @@
 {% endblock %}
 
 {% block content %}
-	<body>
+<div class="row">
+  <div class="col-md-8">
+    <div class="panel panel-default">
+      <div class="panel-heading">接口列表</div>
+      <div class="panel-body">
+        <address>
+          {% for interFace in page_of_interFaces.object_list %}
+            <strong><p class="bg-primary">{{ interFace.title }}</p></strong><br>
+            <p class="bg-success"><a href="{% url 'interFaceDetail' interFace.pk %}">{{ interFace.request_url }}</a></p>
+          {% endfor %}
+      </address>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="panel panel-default">
+      <div class="panel-heading">模块类型</div>
+      <div class="panel-body">
+        <ul>
+          {% for interFace in page_of_interFaces.object_list %}
+            <li><p><a href="{% url 'interFaceType' interFace.model_type.pk %}">{{ interFace.model_type }}</a></p></li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
 
 
-          <div class="col-md-8">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h3 class="panel-title">接口列表(共有{{ interFaces|length}}个接口)</h3>
-              </div>
-              <div class="panel-body">
-                <address>
-                    {% for interFace in interFaces%}
-                      <strong><p class="bg-primary">{{ interFace.title }}</p></strong><br>
-                      <p class="bg-success"><a href="{% url 'interFaceDetail' interFace.pk %}">{{ interFace.request_url }}</a></p>
-                    {% endfor %}
-                </address>
-              </div>
-            </div>
+  <div class="paginator">
+    <ul class="pagination">
+      <li>
+        {% if page_of_interFaces.has_previous %}
+          <a href="?page={{ page_of_interFaces.previous_page_number}}" aria-label="Previous">
+             <span aria-hidden="true">&laquo;</span>
+          </a>
+        {% else %}
+          <span aria-hidden="true">&laquo;</span>
+      {% endif %}
+      </li>
+      {% for page_num in page_range %}
+        {% if page_num == page_of_interFaces.number %}
+          <li class="active"><span>{{ page_num }}</span></li>
+        {% else %}
+          {% if page_num == '...'%}
+            <li><span>{{ page_num }}</span></li>
+          {% else %}
+            <li><a href="?page={{ page_num }}">{{ page_num }}</a></li>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+      <li>
+        {% if page_of_interFaces.has_next %}
+          <a href="?page={{ page_of_interFaces.next_page_number}}" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+          </a>
+        {% else %}
+          <span aria-hidden="true">&raquo;</span>
+        {% endif %}
+      </li>
+    </ul>
+    <p>
+      共有{{ page_of_interFaces.paginator.count}}个接口,
+      当前第{{ page_of_interFaces.number }}页,
+      共{{ page_of_interFaces.paginator.num_pages}}页
+    </p>
+  </div>
+    
+  
+<style type="text/css" media="screen">
+  ol, ul {
+      margin-top: 0;
+      margin-bottom: 10px;
+      list-style: none;
 
-          </div>
-          <div class="col-md-4">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h3 class="panel-title">模块类型</h3>
-              </div>
-              <div class="panel-body">
-                <ul>
-                    {% for interFace in interFaces %}
-                    <li><p><a href="{% url 'interFaceType' interFace.model_type.pk %}">{{ interFace.model_type }}</a></p></li>
-                    {% endfor %}
-                </ul>
-              </div>
-            </div>
-          </div>
-
-
-        <style type="text/css" media="screen">
-                ol, ul {
-                    margin-top: 0;
-                    margin-bottom: 10px;
-                    list-style: none;
-                }
-        </style>
-	</body>
+  }
+  div.paginator{
+    text-align: center;
+  }
+</style>
 {% endblock %}
