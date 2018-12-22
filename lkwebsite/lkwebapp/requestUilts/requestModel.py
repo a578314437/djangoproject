@@ -38,7 +38,7 @@ class requestClass():
         header=self.get_cookies()
         #print(header['Cookie'])
         request=requests.post(url=requestUrl,
-                              data=requesParame,
+                              json=requesParame,
                               headers=header)
         return {'result':json.loads(json.dumps(request.text))}
 

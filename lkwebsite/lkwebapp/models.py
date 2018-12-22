@@ -1,7 +1,7 @@
 from django.db import models
 
-# Create your models here.
 class lkModelType(models.Model):
+# Create your models here.
     model_type=models.CharField(max_length=30)
     
     def __str__(self):

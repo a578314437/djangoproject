@@ -25,8 +25,8 @@
       <div class="panel-heading">模块类型</div>
       <div class="panel-body">
         <ul>
-          {% for interFace in page_of_interFaces.object_list %}
-            <li><p><a href="{% url 'interFaceType' interFace.model_type.pk %}">{{ interFace.model_type }}</a></p></li>
+          {% for interFace in interFaces_type %}
+            <li><p><a href="{% url 'interFaceTypeList' interFace.pk %}">{{ interFace.model_type }}({{ interFace.interFace_type_count}})</p></a></li>
           {% endfor %}
         </ul>
       </div>
