@@ -11,6 +11,7 @@ class lkModelType(models.Model):
 class lkModel(models.Model):
     title=models.CharField(max_length=50)
     model_type=models.ForeignKey(lkModelType,on_delete=models.DO_NOTHING)
+    reques_parame=models.TextField()
     request_url=models.TextField()
     
     def __str__(self):

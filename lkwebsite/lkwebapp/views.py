@@ -83,13 +83,18 @@ def interFaceList(request):
 
 def interFaceDetail(request,interFace_pk):
     interFace=get_object_or_404(lkModel,pk=interFace_pk)
-    requesParame = request.POST.get('interFaceParame','{"1":"5"}')
+    data="currentPage=1&pageSize=20&custId=&custName=&orderState=&orderStateName=&orderCode=&effDate=2018-12-01&expDate=2018-12-31&orderIds=&tenantIds=72%2C106%2C110%2C111"
+    requesParame = request.POST.get('interFaceParame',data)
     print(requesParame)
+    #print(requesParame)
     context={}
     context['interFace']=interFace
     q=requestClass()
-    result=q.get_rquest_result(interFace.request_url,eval(requesParame))
-    context['result']=result
+    try:
+        result=q.get_rquest_result(interFace.request_url,requesParame)
+        context['result']=result
+    except Exception as e:
+        pass
     return render(request,'interFace_detail.html', locals())
 
 def interFaceTypeList(request,interFace_type_pk):
